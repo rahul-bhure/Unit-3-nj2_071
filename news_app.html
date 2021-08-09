@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <title>
+        News App
+    </title>
+    <head>
+        <style>
+            #box {
+                /* border: 1px solid black; */
+                background-color: blanchedalmond;
+                width: 90%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id='header'>
+            <input type="text" id='query'/>
+            <input type="button" id='btn' onclick="getData()" value="Search"/>
+        </div>
+        <div id='box'></div>
+
+    </body>
+</html>
+<script>
+
+  async function getData() {
+   try {
+       let q = document.getElementById('query').value;
+       let res = await fetch(`http://api.mediastack.com/v1/news?access_key=3d907e00a88c69184a8f9d3fd976c5bf&keywords=${q}`)
+       let news_data = await res.json()
+      console.log("news:", news_data)
+       appendData(news_data)
+   } catch {
+       console.log("err:",err)
+   }
+  
+ 
+    }
+
+
+function appendData({data}) {
+let mainDiv = document.getElementById('box')
+let div = document.createElement('div')
+let title = document.createElement('h2');
+    let desc = document.createElement('p');
+    title.textContent = data[0].title;
+    desc.textContent = data[0].description
+console.log(data[0].title)
+div.append(title,desc)
+
+mainDiv.append(div)
+
+
+}
+</script>

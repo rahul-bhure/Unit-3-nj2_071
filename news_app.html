@@ -5,15 +5,38 @@
     </title>
     <head>
         <style>
+
+           
             #box {
                 /* border: 1px solid black; */
                 background-color: blanchedalmond;
                 width: 90%;
             }
+
+            .url {
+                color: darkgoldenrod;
+                text-decoration: underline;
+                text-decoration-color: crimson;
+
+            }
+            .url :hover {
+                color: cornflowerblue;
+                
+                font-size: 40px;
+            }
+
+            #header h1 {
+                font-family: sans-serif;
+                font-weight: 600;
+                color: crimson;
+                margin: 20px;
+            }
+            
         </style>
     </head>
     <body>
         <div id='header'>
+            <h1>News APP</h1>
             <input type="text" id='query'/>
             <input type="button" id='btn' onclick="getData()" value="Search"/>
         </div>
@@ -22,6 +45,10 @@
     </body>
 </html>
 <script>
+      let img = document.createElement('img')
+        img.src = `https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bmV3c3BhcGVyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80`
+        let body = document.querySelector('body')
+        body.append(img)
 
   async function getData() {
    try {
@@ -41,14 +68,29 @@
 function appendData({data}) {
 let mainDiv = document.getElementById('box')
 let div = document.createElement('div')
-let title = document.createElement('h2');
-    let desc = document.createElement('p');
-    title.textContent = data[0].title;
-    desc.textContent = data[0].description
-console.log(data[0].title)
-div.append(title,desc)
 
-mainDiv.append(div)
+    data.forEach ((el) => {
+        let title = document.createElement('h2');
+        let desc = document.createElement('p');
+        let news_url = document.createElement('p')
+
+        title.textContent = el.title
+        desc.textContent = el.description
+        news_url.innerHTML = 'news in detail'
+        news_url.setAttribute('class','url')
+        news_url.addEventListener('click', ()=> {
+            window.location.href = `${el.url}`
+        })
+        div.append(title, desc,news_url)
+
+        mainDiv.append(div)
+ 
+    })
+  
+    // title.textContent = data[0].title;
+    // desc.textContent = data[0].description
+// console.log(data[0].title)
+
 
 
 }
